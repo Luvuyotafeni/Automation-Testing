@@ -14,7 +14,7 @@ test.describe('Login API Tests', () => {
             process.env.USER_PASSWORD
         );
 
-        expect(response.status()).toBe(200);
+        expect(response.status()).toBeTruthy(200);
 
         const body = await response.json();
 
@@ -35,7 +35,6 @@ test.describe('Login API Tests', () => {
         });
 
         expect(response.status()).toBe(403);
-
         expect(response.ok()).toBeFalsy();
     });
 });

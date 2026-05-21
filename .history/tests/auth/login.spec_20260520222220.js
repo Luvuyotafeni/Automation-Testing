@@ -36,6 +36,8 @@ test.describe('Login API Tests', () => {
 
         expect(response.status()).toBe(403);
 
-        expect(response.ok()).toBeFalsy();
+        const body = await response.json();
+
+        expect(body.message).toContain('Invalid');
     });
 });

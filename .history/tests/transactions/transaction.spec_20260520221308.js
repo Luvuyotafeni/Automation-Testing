@@ -32,12 +32,52 @@ test.describe('Transaction API Tests', () => {
 
         const body = await response.json();
 
-        expect(body).toHaveProperty('id');
+        expect(body.message).toContain('successful');
 
-        expect(body.amount).toBe(5000);
-
-        expect(body.user.email).toBe(process.env.USER_EMAIL);
+        expect(body.newBalance).toBeGreaterThan(0);
     });
+
+    test('@Positive Withdraw Money', async ({ request }) => {
+
+        const response = await request.post(
+            '/api/transactions/withdraw',
+            {
+                headers: authHeaders(),
+
+                data: {
+                    amount: 500
+                }
+            }
+        );
+
+        expect(response.status()).toBe(200);
+
+        const body = await response.json();
+
+        expect(body.message).toContain('successful');
+    });
+
+    test('@Negative Withdraw Insufficient Funds', async ({ request }) => {
+
+        const response = await request.post(
+            '/api/transactions/withdraw',
+            {
+                headers: authHeaders(),
+
+                data: {
+                    amount: 999999
+                }
+            }
+        );
+
+        expect(response.status()).toBe(400);
+
+        const body = await response.json();
+
+        expect(body.message).toContain('Insufficient');
+    });
+
+    //Poloing the transaction history until it returns 200, with a timeout of 10 seconds and intervals of 1 and 2 seconds
 
     test('@Positive Poll Transaction History', async ({ request }) => {
 

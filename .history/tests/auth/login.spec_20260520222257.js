@@ -35,7 +35,6 @@ test.describe('Login API Tests', () => {
         });
 
         expect(response.status()).toBe(403);
-
         expect(response.ok()).toBeFalsy();
     });
 });

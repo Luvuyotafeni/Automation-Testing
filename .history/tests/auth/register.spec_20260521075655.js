@@ -1,5 +1,4 @@
 const { test, expect } = require('@playwright/test');
-
 const users = require('../data/users.json');
 
 test.describe('Register API Tests', () => {
@@ -39,12 +38,11 @@ test.describe('Register API Tests', () => {
             }
         });
 
-        /**
-         * Your backend currently allows duplicate registration.
-         * So this returns 201 instead of 403/400.
-         */
+        expect(response.status()).toBe(403);
 
-        expect(response.status()).toBe(201);
+        const body = await response.text();
+
+        expect(body).toContain('already');
     });
 
     for (const user of users) {
