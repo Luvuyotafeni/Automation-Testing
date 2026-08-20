@@ -23,7 +23,9 @@ test.describe('Transaction API Tests', () => {
                 headers: authHeaders(),
 
                 data: {
-                    amount: 5000
+                    amount: 5000,
+                    type: 'deposit',
+                    description: 'Deposit Money'
                 }
             }
         );
